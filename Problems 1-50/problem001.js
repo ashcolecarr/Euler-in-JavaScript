@@ -19,11 +19,11 @@ function multiplesSum () {
 
 http.createServer(function (req, res) {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  
+
   var start = new Date().getTime();
   res.write(multiplesSum().toString());
-  
+
   var end = new Date().getTime();
-  res.write(`\nProgram execution took ${end - start} seconds.`);
+  res.write(`\nProgram execution took ${(end - start) / 1000} seconds.`);
   res.end();
 }).listen(8080);
