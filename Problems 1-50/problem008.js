@@ -2,7 +2,6 @@
 'use-strict';
 
 var http = require('http');
-var euler = require('../euler.js');
 
 const ADJACENT = 13;
 

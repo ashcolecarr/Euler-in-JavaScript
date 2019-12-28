@@ -82,5 +82,41 @@ module.exports = {
     }
 
     return factors;
+  },
+
+  flatten: function (array) {
+    if (!Array.isArray(array) || array.length === 0) {
+      return [];
+    }
+
+    if (Array.isArray(array[0])) {
+      return (this.flatten(array[0])).concat(this.flatten(array.slice(1)));
+    } else {
+      return [array[0]].concat(this.flatten(array.slice(1)));
+    }
+  },
+
+  factors: function (n) {
+    var step = n % 2 === 1 ? 2 : 1;
+
+    var candidates = this.range(1, Math.trunc(Math.sqrt(n)) + 1, step);
+    var numbers = [];
+    for (var i = 0; i < candidates.length; i++) {
+      if (n % candidates[i] === 0) {
+        numbers.push([candidates[i], Math.trunc(n / candidates[i])]);
+      }
+    }
+
+    return [...new Set(this.flatten(numbers))];
+  },
+
+  sum: function (array) {
+    if (!Array.isArray(array)) {
+      return 0;
+    }
+
+    return array.reduce((sum, val) => {
+      return sum + val;
+    }, 0);
   }
 };
