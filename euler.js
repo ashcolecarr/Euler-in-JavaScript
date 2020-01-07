@@ -118,5 +118,45 @@ module.exports = {
     return array.reduce((sum, val) => {
       return sum + val;
     }, 0);
+  },
+
+  factorial: function (n) {
+    if (n < 0n) {
+      throw new Error('Value cannot be negative.');
+    } else if (n === 1n || n === 0n) {
+      return 1n;
+    } else {
+      return n * this.factorial(n - 1n);
+    }
+  },
+
+  /* Get permutations using Heap's algorithm. 
+   * Note: permutations are not sorted.
+   */
+  permutations: function (val, size = val.length) {
+    if (size <= 1) {
+      return [val.map(v => v.toString()).join('')];
+    }
+
+    var result = [];
+    var permute = val;
+    for (var i = 0; i < size; i++) {
+      let permutations = this.permutations(permute, size - 1);
+      for (var j = 0; j < permutations.length; j++) {
+        result.push(permutations[j]);
+      }
+
+      if (size % 2 === 1) {
+        let temp = permute[0];
+        permute[0] = permute[size - 1];
+        permute[size - 1] = temp;
+      } else {
+        let temp = permute[i];
+        permute[i] = permute[size - 1];
+        permute[size - 1] = temp;
+      }
+    }
+
+    return result;
   }
 };
