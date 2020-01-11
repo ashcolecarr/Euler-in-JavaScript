@@ -115,9 +115,11 @@ module.exports = {
       return 0;
     }
 
+    let initialVal = typeof array[0] === 'bigint' ? 0n : 0;
+
     return array.reduce((sum, val) => {
       return sum + val;
-    }, 0);
+    }, initialVal);
   },
 
   factorial: function (n) {
@@ -158,5 +160,41 @@ module.exports = {
     }
 
     return result;
+  },
+
+  gcd: function (a, b) {
+    if (a < 0 || b < 0) {
+      throw new Error('Values cannot be negative.');
+    }
+    
+    if (a === b) {
+      return a;
+    }
+
+    if (a === 0) {
+      return b;
+    }
+
+    if (b === 0) {
+      return a;
+    }
+
+    if (a % 2 === 0) {
+      if (b % 2 === 1) {
+        return this.gcd(a / 2, b);
+      } else {
+        return this.gcd(a / 2, b / 2) * 2;
+      }
+    }
+
+    if (b % 2 === 0) {
+      return this.gcd(a, b / 2);
+    }
+
+    if (a > b) {
+      return this.gcd((a - b) / 2, b);
+    }
+
+    return this.gcd((b - a) / 2, a);
   }
 };
